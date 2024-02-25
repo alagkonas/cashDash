@@ -29,6 +29,7 @@
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.3",
     "expo-web-browser": "~12.8.2",
+    "formik": "^2.4.5",
     "lodash": "^4.17.21",
     "mysql2": "^3.9.1",
     "n": "^9.2.1",
