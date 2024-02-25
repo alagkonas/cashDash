@@ -1,19 +1,30 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
+export enum ColorsEnum {
+  Dark_Gray = '#2f2f2f',
+  Light_Gray = '#faf0e6',
+  Dark_Background = '#121212',
+  White = '#fff',
+  Black = '#000',
+  Red = '#ccc',
+}
+
 export default {
   light: {
-    text: '#000',
-    background: '#fff',
+    text: ColorsEnum.Black,
+    background: ColorsEnum.White,
+    lightBackground: ColorsEnum.Light_Gray,
     tint: tintColorLight,
-    tabIconDefault: '#ccc',
+    tabIconDefault: ColorsEnum.Red,
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: '#fff',
-    background: '#000',
+    text: ColorsEnum.White,
+    background: ColorsEnum.Dark_Background,
+    lightBackground: ColorsEnum.Dark_Gray,
     tint: tintColorDark,
-    tabIconDefault: '#ccc',
+    tabIconDefault: ColorsEnum.Red,
     tabIconSelected: tintColorDark,
   },
 };

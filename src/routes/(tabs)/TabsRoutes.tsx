@@ -30,6 +30,7 @@ const TabsRoutes: React.FC = () => {
         name='dashboard'
         options={{
           title: 'Dashboard',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
         }}
       />
@@ -37,6 +38,7 @@ const TabsRoutes: React.FC = () => {
         name='analytics'
         options={{
           title: 'Analytics',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
         }}
       />

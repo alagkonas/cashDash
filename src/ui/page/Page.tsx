@@ -1,15 +1,15 @@
 import React, { PropsWithChildren } from 'react';
+import { ScrollView } from 'react-native';
 
-import styled from 'styled-components/native';
-
+import { SafeAreaView } from '../safe-area-view/SafeAreaView';
 import { View } from '../view/View';
 
-const PageView = styled(View)`
-  flex: 1;
-`;
-
 const Page: React.FC<PropsWithChildren> = ({ children }) => {
-  return <PageView>{children}</PageView>;
+  return (
+    <SafeAreaView>
+      <ScrollView>{children}</ScrollView>
+    </SafeAreaView>
+  );
 };
 
 export default Page;
