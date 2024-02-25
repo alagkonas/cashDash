@@ -4,7 +4,6 @@ import React, { PropsWithChildren } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { styled } from 'styled-components';
 import { ColorsEnum } from '../styles/Colors';
-import { Text } from '../text/Text';
 
 type ButtonProps = ThemeProps &
   TouchableOpacity['props'] &
