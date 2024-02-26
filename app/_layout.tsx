@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Routes from '@/src/routes/Routes';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/src/service/react-query/client';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,8 +49,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Routes />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Routes />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
