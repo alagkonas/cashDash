@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Page from '@/src/ui/page/Page';
 
@@ -8,6 +8,11 @@ import TransactionHistory from './components/transaction-history/TransactionHist
 import RecentTransactions from './components/recent-transactions/RecentTransactions';
 
 const DashboardPage: React.FC = () => {
+  useEffect(() => {
+    const d = async () => {};
+
+    d();
+  }, []);
   return (
     <Page>
       <TopMenu />

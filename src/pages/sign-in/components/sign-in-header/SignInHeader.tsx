@@ -15,7 +15,7 @@ const SignInHeader: React.FC = () => {
       <Text style={{ fontSize: 28, fontWeight: '600' }}>
         {Texts.SignInTitle}
       </Text>
-      <SignInSubTitle>{Texts.SignInTitle}</SignInSubTitle>
+      <SignInSubTitle>{Texts.SignInSubtitle}</SignInSubTitle>
     </SignInHeaderContainer>
   );
 };

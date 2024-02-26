@@ -1,12 +1,9 @@
 import {
   decimal,
   float,
-  int,
-  json,
   mysqlTable,
   serial,
   text,
-  varchar,
 } from 'drizzle-orm/mysql-core';
 import { USERS_TABLE } from '../consts';
 

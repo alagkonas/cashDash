@@ -7,6 +7,7 @@ import { FormFields } from './SignInForm.types';
 import { Texts } from './SignInForm.texts';
 import Button from '@/src/ui/button/Button';
 import { Text } from '@/src/ui/text/Text';
+import { Link } from 'expo-router';
 
 const LoginForm: React.FC = () => {
   return (
@@ -22,6 +23,13 @@ const LoginForm: React.FC = () => {
         label={Texts.UserPassword}
         secureTextEntry
       />
+      <View
+        style={{ alignItems: 'flex-end', marginVertical: 10, marginRight: 16 }}
+      >
+        <Link href='/sign-up'>
+          <Text>{Texts.NoAccounts}</Text>
+        </Link>
+      </View>
       <View
         style={{
           paddingHorizontal: 8,
