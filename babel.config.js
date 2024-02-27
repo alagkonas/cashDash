@@ -1,7 +1,14 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      [
+        'babel-preset-expo',
+        {
+          lazyImports: true, // <<< The fix
+        },
+      ],
+    ],
     plugins: [
       [
         'module:react-native-dotenv',

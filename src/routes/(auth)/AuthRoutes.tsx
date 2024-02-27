@@ -1,12 +1,11 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
 
-import Colors from '@/src/ui/styles/Colors';
+import { Stack, Tabs } from 'expo-router';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
+import Colors from '@/src/ui/styles/Colors';
 import { useClientOnlyValue } from '@/src/hooks/useClientOnlyValue';
+import { FontAwesome } from '@expo/vector-icons';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
@@ -14,7 +13,7 @@ function TabBarIcon(props: {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
-const TabsRoutes: React.FC = () => {
+const AuthRoutes: React.FC = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -46,28 +45,4 @@ const TabsRoutes: React.FC = () => {
   );
 };
 
-export default TabsRoutes;
-
-{
-  /* <Tabs.Screen
-        name='index'
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-          headerRight: () => (
-            <Link href='/modal' asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name='info-circle'
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      /> */
-}
+export default AuthRoutes;

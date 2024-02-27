@@ -13,9 +13,7 @@ import { users } from './users';
 export const transactions = mysqlTable(TRANSACTIONS_TABLE, {
   id: serial('id').primaryKey(),
   amount: float('amount').notNull(),
-  userId: int('user_id')
-    .notNull()
-    .references(() => users.id),
+  userId: int('user_id'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   type: mysqlEnum('type', ['deposit', 'expense']),
   description: text('description'),

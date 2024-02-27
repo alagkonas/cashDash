@@ -5,12 +5,6 @@ import { Link, useRouter } from 'expo-router';
 
 import FormInput from '@/src/ui/form-input/FormInput';
 import { View } from '@/src/ui/view/View';
-
-import {
-  FormFields,
-  FormFieldsTypes,
-  validationSchema,
-} from './SignUpForm.types';
 import { Texts } from './SignUpForm.texts';
 import Button from '@/src/ui/button/Button';
 import { Text } from '@/src/ui/text/Text';
@@ -18,37 +12,46 @@ import { useMutation } from '@tanstack/react-query';
 import { createUser } from '@/src/service/api/users-api/mutations';
 import { UserDTO } from '@/src/service/api/users-api/types';
 import { routes } from '@/src/routes/consts';
+import { CREATE_USER } from '@/src/service/api/users-api/consts';
+
+import {
+  FormFields,
+  FormFieldsTypes,
+  validationSchema,
+} from './SignUpForm.types';
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
-  // const { mutate, isPending, isSuccess, mutateAsync } = useMutation({
-  //   // mutationKey: CREATE_USER,
-  //   mutationFn: createUser,
-  // });
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationKey: [CREATE_USER],
+    mutationFn: createUser,
+  });
 
-  // console.log(isPending, isSuccess);
+  console.log(isPending, isSuccess);
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     router.push(routes.dashboard);
-  //   }
-  // }, [isSuccess]);
-
-  const handleSubmit = useCallback((values: FormFieldsTypes) => {
-    if (!values.email || !values.password || !values.userName) return;
-    const payload: UserDTO = {
-      email: values.email,
-      userName: values.userName,
-      // password: values.password
-    };
-
-    try {
-      // mutate(payload);
-      console.log('PASSED');
-    } catch (error) {
-      console.log('ERROR: ', error);
+  useEffect(() => {
+    if (isSuccess) {
+      router.push(routes.dashboard);
     }
-  }, []);
+  }, [isSuccess]);
+
+  const handleSubmit = useCallback(
+    (values: FormFieldsTypes) => {
+      if (!values.email || !values.password || !values.userName) return;
+      const payload: UserDTO = {
+        email: values.email,
+        userName: values.userName,
+        password: values.password,
+      };
+
+      try {
+        mutate(payload);
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+    },
+    [mutate]
+  );
 
   return (
     <View>

@@ -4,5 +4,5 @@ import { users } from '@/db/schemas/users';
 export const getUserData = () => {};
 
 export const getUsers = async () => {
-  db.query.users.findMany();
+  return db.select().from(users);
 };
