@@ -7,7 +7,7 @@ import Card from '@/src/ui/card/Card';
 import { Text } from '@/src/ui/text/Text';
 import { Actions, BalanceIcon, CashBalance } from './TotalBalance.components';
 
-const TotalBalance: React.FC = () => {
+const TotalBalance: React.FC<{ userBalance: number }> = ({ userBalance }) => {
   return (
     <View style={{ padding: 12 }}>
       <Card height={200}>
@@ -19,7 +19,7 @@ const TotalBalance: React.FC = () => {
               alignItems: 'center',
             }}
           >
-            <CashBalance />
+            <CashBalance userBalance={userBalance} />
             <BalanceIcon />
           </NativeView>
           <Actions />

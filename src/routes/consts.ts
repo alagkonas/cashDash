@@ -1,6 +1,5 @@
 export enum Routes {
-  Dashboard = '/(tabs)/dashboard',
-  AuthDashboard = '/(auth)/dashboard',
+  Dashboard = '/(auth)/dashboard',
 }
 
 export const routes = {

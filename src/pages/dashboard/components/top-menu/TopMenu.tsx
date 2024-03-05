@@ -8,13 +8,16 @@ import Circle from '@/src/ui/circle/Circle';
 
 import { TopMenuContainer } from './TopMenu.components';
 import { Texts } from './TopMenu.texts';
+import { useGetUser } from '@/src/hooks/useGetUser';
 
-const TopMenu: React.FC = () => {
+const TopMenu: React.FC<{ userName: string }> = ({ userName }) => {
   const colorScheme = useColorScheme();
+
   return (
     <TopMenuContainer>
       <Text style={{ fontSize: 20, fontWeight: '600' }}>
         {Texts.WelcomeText}
+        {userName}
       </Text>
       <Circle>
         <FontAwesome

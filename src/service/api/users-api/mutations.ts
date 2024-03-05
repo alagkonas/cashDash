@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import bcrypt from 'react-native-bcrypt';
 
-const salt = bcrypt.genSaltSync(6);
+const salt = bcrypt.genSaltSync(7);
 
 export const createUser = async (user: UserDTO) => {
   const doesUserExists = await db.query.users.findFirst({
@@ -20,20 +20,29 @@ export const createUser = async (user: UserDTO) => {
   const hashedPassword = bcrypt.hashSync(user.password, salt);
   const sessionToken = bcrypt.hashSync(Date.now().toString(), salt);
 
-  const createdUser = await db
-    .insert(users)
-    .values({
-      ...user,
-      password: hashedPassword,
-      sessionToken,
-    })
-    .then();
+  const createdUser = await db.insert(users).values({
+    ...user,
+    password: hashedPassword,
+    sessionToken,
+  });
 
   if (!createdUser) {
     throw new Error('User was not created!');
   }
 
+  const userObject = await db.query.users.findFirst({
+    where: eq(users.email, user.email),
+  });
+
   AsyncStorage.setItem('sessionToken', sessionToken);
+  AsyncStorage.setItem(
+    'user',
+    JSON.stringify({
+      userName: userObject?.userName,
+      email: userObject?.email,
+      id: userObject?.id,
+    })
+  );
   return;
 };
 
@@ -42,7 +51,7 @@ export const loginUser = async (loginValues: {
   password: string;
 }) => {
   const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, loginValues.email),
+    where: eq(users.email, loginValues.email),
   });
 
   if (!user) {
@@ -67,5 +76,14 @@ export const loginUser = async (loginValues: {
   }
 
   AsyncStorage.setItem('sessionToken', sessionToken);
+  AsyncStorage.setItem(
+    'user',
+    JSON.stringify({
+      userName: user?.userName,
+      email: user?.email,
+      id: user?.id,
+    })
+  );
+
   return;
 };

@@ -11,7 +11,7 @@ import { Text } from '@/src/ui/text/Text';
 import { useMutation } from '@tanstack/react-query';
 import { createUser } from '@/src/service/api/users-api/mutations';
 import { UserDTO } from '@/src/service/api/users-api/types';
-import { routes } from '@/src/routes/consts';
+import { Routes } from '@/src/routes/consts';
 import { CREATE_USER } from '@/src/service/api/users-api/consts';
 
 import {
@@ -22,16 +22,14 @@ import {
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
-  const { mutate, isPending, isSuccess } = useMutation({
+  const { mutate, isSuccess } = useMutation({
     mutationKey: [CREATE_USER],
     mutationFn: createUser,
   });
 
-  console.log(isPending, isSuccess);
-
   useEffect(() => {
     if (isSuccess) {
-      router.push(routes.dashboard);
+      router.push(Routes.Dashboard);
     }
   }, [isSuccess]);
 
@@ -42,6 +40,7 @@ const SignUpForm: React.FC = () => {
         email: values.email,
         userName: values.userName,
         password: values.password,
+        balance: 0,
       };
 
       try {

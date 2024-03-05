@@ -7,8 +7,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Colors from '@/src/ui/styles/Colors';
 import Button from '@/src/ui/button/Button';
+import { useRouter } from 'expo-router';
+import { useCallback } from 'react';
+import { TransactionTypeEnum } from '@/db/schemas/transactions';
 
-export const CashBalance = () => {
+export const CashBalance: React.FC<{ userBalance: number }> = ({
+  userBalance,
+}) => {
   const colorScheme = useColorScheme();
 
   return (
@@ -29,7 +34,7 @@ export const CashBalance = () => {
           color={Colors[colorScheme ?? 'light'].text}
         />
         <Text style={{ fontSize: 38, fontWeight: '600', marginLeft: 6 }}>
-          5000
+          {userBalance}
         </Text>
       </View>
     </View>
@@ -51,6 +56,17 @@ export const BalanceIcon: React.FC = () => {
 };
 
 export const Actions: React.FC = () => {
+  const router = useRouter();
+
+  const handleAddTransaction = useCallback(
+    (transactionType: TransactionTypeEnum) => {
+      console.log('TRANSACTION TYPE FROM BTN', transactionType);
+      router.push(`/${transactionType}`);
+      // router.push('/(public)/sign-up');
+    },
+    [router]
+  );
+
   return (
     <View
       style={{
@@ -58,10 +74,20 @@ export const Actions: React.FC = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Button withLightBackground width={'40%'} height={35}>
+      <Button
+        withLightBackground
+        width={'40%'}
+        height={35}
+        onPress={() => handleAddTransaction(TransactionTypeEnum.Deposit)}
+      >
         <Text>{Texts.AddDeposit}</Text>
       </Button>
-      <Button withLightBackground width={'40%'} height={35}>
+      <Button
+        withLightBackground
+        width={'40%'}
+        height={35}
+        onPress={() => handleAddTransaction(TransactionTypeEnum.Expense)}
+      >
         <Text>{Texts.AddExpense}</Text>
       </Button>
     </View>

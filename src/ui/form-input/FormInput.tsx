@@ -10,18 +10,25 @@ type FormInputProps = TextInputProps & {
   field: string;
   label: string;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 const FormInput: React.FC<FormInputProps> = ({
   field,
   label,
   placeholder,
+  disabled = false,
+  // value,
   ...restInputProps
 }) => {
   return (
     <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
       <Text style={{ paddingBottom: 6, fontSize: 16 }}>{label}</Text>
-      <ThemedTextInput placeholder={placeholder} {...restInputProps} />
+      <ThemedTextInput
+        disabled={disabled}
+        placeholder={placeholder}
+        {...restInputProps}
+      />
     </View>
   );
 };

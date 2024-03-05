@@ -41,6 +41,14 @@ const AuthRoutes: React.FC = () => {
           tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
         }}
       />
+      <Tabs.Screen
+        name='(transactions)/[transactionType]'
+        options={{
+          title: 'Transaction',
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
+      />
     </Tabs>
   );
 };

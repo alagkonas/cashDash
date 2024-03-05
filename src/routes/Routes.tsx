@@ -2,21 +2,18 @@ import React, { useEffect } from 'react';
 
 import { Stack, router } from 'expo-router';
 
-import { useColorScheme } from '@/src/hooks/useColorScheme';
 import { useIsUserAuthenticated } from '../hooks/useIsUserAthenticated';
 import { Routes as RoutesEnum } from './consts';
+import { useGetUser } from '../hooks/useGetUser';
 
 const Routes: React.FC = () => {
-  const colorScheme = useColorScheme();
   const { isAuthenticated } = useIsUserAuthenticated();
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace(RoutesEnum.AuthDashboard);
+      router.replace(RoutesEnum.Dashboard);
     }
   }, [isAuthenticated]);
-
-  console.log('IS AUTHED', isAuthenticated);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

@@ -11,7 +11,7 @@ export const users = mysqlTable(USERS_TABLE, {
   id: serial('id').primaryKey(),
   userName: text('user_name').notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  balance: float('balance').default(0),
+  balance: float('balance').notNull().default(0),
   password: text('password').notNull(),
   sessionToken: text('session_token'),
 });
