@@ -87,3 +87,26 @@ export const loginUser = async (loginValues: {
 
   return;
 };
+
+export const signOutUser = async (userId: number) => {
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  });
+
+  if (!user) {
+    throw new Error("User doesn't exists");
+  }
+
+  const userUpdated = await db
+    .update(users)
+    .set({ sessionToken: null })
+    .where(eq(users.id, user.id));
+
+  if (!userUpdated) {
+    throw new Error('Something went wrong!');
+  }
+
+  await AsyncStorage.multiRemove(['sessionToken', 'user']);
+
+  return;
+};

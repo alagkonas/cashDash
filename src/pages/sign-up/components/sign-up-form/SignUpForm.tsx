@@ -19,10 +19,11 @@ import {
   FormFieldsTypes,
   validationSchema,
 } from './SignUpForm.types';
+import { toLower } from 'lodash';
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
-  const { mutate, isSuccess } = useMutation({
+  const { mutate, isSuccess, isPending } = useMutation({
     mutationKey: [CREATE_USER],
     mutationFn: createUser,
   });
@@ -31,13 +32,13 @@ const SignUpForm: React.FC = () => {
     if (isSuccess) {
       router.push(Routes.Dashboard);
     }
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   const handleSubmit = useCallback(
     (values: FormFieldsTypes) => {
       if (!values.email || !values.password || !values.userName) return;
       const payload: UserDTO = {
-        email: values.email,
+        email: toLower(values.email),
         userName: values.userName,
         password: values.password,
         balance: 0,
@@ -116,6 +117,7 @@ const SignUpForm: React.FC = () => {
                 onPress={() => {
                   handleSubmit(values);
                 }}
+                loading={isPending}
               >
                 <Text style={{ fontSize: 16, fontWeight: '600' }}>
                   {Texts.SignUp}

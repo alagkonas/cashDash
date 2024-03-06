@@ -2,7 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { UserDTO } from '../service/api/users-api/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type LocalStorageUser = Pick<UserDTO, 'id' | 'email' | 'userName'> | null;
+export type LocalStorageUser = Pick<
+  UserDTO,
+  'id' | 'email' | 'userName'
+> | null;
 
 export const useGetUser = () => {
   const [user, setUser] = useState<LocalStorageUser>(null);

@@ -5,15 +5,18 @@ import { FormFieldsTypes } from './TransactionForm.types';
 import { useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { Routes } from '@/src/routes/consts';
+import { useOnComponentUnmount } from '@/src/hooks/useOnComponentUnmount';
 
 type ActionButtonsProps = {
   handleSubmit: VoidFunction;
   handleReset: VoidFunction;
+  loading: boolean;
 };
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({
   handleSubmit,
   handleReset,
+  loading,
 }) => {
   const router = useRouter();
 
@@ -21,6 +24,8 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
     handleReset();
     router.push(Routes.Dashboard);
   }, [router, handleReset]);
+
+  useOnComponentUnmount(handleReset);
 
   return (
     <View
@@ -43,6 +48,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
         height={50}
         width={'35%'}
         onPress={handleSubmit}
+        loading={loading}
       >
         <Text style={{ fontSize: 16 }}>Submit</Text>
       </Button>

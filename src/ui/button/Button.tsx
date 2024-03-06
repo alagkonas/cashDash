@@ -1,7 +1,7 @@
 import { ThemeProps, useThemeColor } from '@/src/hooks/useThemeColor';
 import React, { PropsWithChildren } from 'react';
 
-import { TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { styled } from 'styled-components';
 import { ColorsEnum } from '../styles/Colors';
 
@@ -12,6 +12,7 @@ type ButtonProps = ThemeProps &
     backgroundColor?: ColorsEnum | string;
     height?: number | string;
     width?: number | string;
+    loading?: boolean;
   }>;
 
 const StyledView = styled(View)<ButtonProps>`
@@ -33,6 +34,8 @@ const StyledView = styled(View)<ButtonProps>`
   background-color: ${({ backgroundColor }) =>
     backgroundColor ? backgroundColor : 'inherit'};
   justify-content: center;
+  align-items: center;
+  opacity: ${({ loading }) => (loading ? 0.5 : 1)};
 `;
 
 const Button: React.FC<ButtonProps> = ({
@@ -43,6 +46,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   height,
   width,
+  loading,
   ...restProps
 }) => {
   const themeBackgroundColor = useThemeColor(
@@ -55,7 +59,13 @@ const Button: React.FC<ButtonProps> = ({
       height={height}
       width={width}
       backgroundColor={backgroundColor ?? themeBackgroundColor}
+      loading={loading}
     >
+      {loading && (
+        <View style={{ marginRight: 6 }}>
+          <ActivityIndicator />
+        </View>
+      )}
       <TouchableOpacity {...restProps}>{children}</TouchableOpacity>
     </StyledView>
   );

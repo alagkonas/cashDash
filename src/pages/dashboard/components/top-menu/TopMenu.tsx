@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Text } from '@/src/ui/text/Text';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,9 +9,16 @@ import Circle from '@/src/ui/circle/Circle';
 import { TopMenuContainer } from './TopMenu.components';
 import { Texts } from './TopMenu.texts';
 import { useGetUser } from '@/src/hooks/useGetUser';
+import { useRouter } from 'expo-router';
+import { Routes } from '@/src/routes/consts';
 
 const TopMenu: React.FC<{ userName: string }> = ({ userName }) => {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const navigateToProfile = useCallback(() => {
+    router.push(Routes.Profile);
+  }, [router]);
 
   return (
     <TopMenuContainer>
@@ -24,6 +31,7 @@ const TopMenu: React.FC<{ userName: string }> = ({ userName }) => {
           name='user'
           size={25}
           color={Colors[colorScheme ?? 'light'].text}
+          onPress={navigateToProfile}
         />
       </Circle>
     </TopMenuContainer>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { Stack, Tabs } from 'expo-router';
+import { Stack, Tabs, useRouter } from 'expo-router';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Colors from '@/src/ui/styles/Colors';
 import { useClientOnlyValue } from '@/src/hooks/useClientOnlyValue';
 import { FontAwesome } from '@expo/vector-icons';
+import { Routes } from '../consts';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -15,6 +16,11 @@ function TabBarIcon(props: {
 
 const AuthRoutes: React.FC = () => {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const handleNavigateBack = useCallback(() => {
+    router.back();
+  }, [router]);
 
   return (
     <Tabs
@@ -47,6 +53,23 @@ const AuthRoutes: React.FC = () => {
           title: 'Transaction',
           headerShown: false,
           tabBarButton: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name='(settings)/settings'
+        options={{
+          title: '',
+          headerShown: true,
+          tabBarButton: () => null,
+          headerLeft: ({}) => (
+            <FontAwesome
+              name='angle-left'
+              size={30}
+              style={{ marginBottom: -3, marginLeft: 12 }}
+              color={Colors[colorScheme ?? 'light'].tabIconDefault}
+              onPress={handleNavigateBack}
+            />
+          ),
         }}
       />
     </Tabs>

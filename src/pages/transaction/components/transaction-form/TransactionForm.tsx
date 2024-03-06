@@ -30,7 +30,7 @@ const TransactionForm: React.FC = () => {
   const router = useRouter();
   const user = useGetUser();
 
-  const { mutate, isSuccess } = useMutation({
+  const { mutate, isSuccess, isPending } = useMutation({
     mutationKey: [CREATE_TRANSACTION],
     mutationFn: createTransaction,
   });
@@ -39,7 +39,7 @@ const TransactionForm: React.FC = () => {
     if (isSuccess) {
       router.push(Routes.Dashboard);
     }
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   const formFields = useGetFormFields(transactionType);
 
@@ -86,18 +86,28 @@ const TransactionForm: React.FC = () => {
       >
         {({ setFieldValue, values, handleReset }) => (
           <View>
-            {formFields.map(({ field, label }) => (
+            {formFields.map(({ field, label, valueMapper, placeHolder }) => (
               <FormInput
                 key={field}
                 field={field}
                 label={label}
                 value={values[field]}
-                onChangeText={(value) => setFieldValue(field, value)}
+                placeholder={placeHolder}
+                onChangeText={(value) => {
+                  if (valueMapper) {
+                    return setFieldValue(
+                      field,
+                      valueMapper(value, values[field])
+                    );
+                  }
+                  return setFieldValue(field, value);
+                }}
               />
             ))}
             <ActionButtons
               handleReset={handleReset}
               handleSubmit={() => handleSubmit(values)}
+              loading={isPending}
             />
           </View>
         )}

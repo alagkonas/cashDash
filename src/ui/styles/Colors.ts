@@ -7,7 +7,8 @@ export enum ColorsEnum {
   Dark_Background = '#121212',
   White = '#fff',
   Black = '#000',
-  Red = '#ccc',
+  Red = '#FF0000',
+  Faded_Gray = '#ccc',
 }
 
 export default {
@@ -16,7 +17,7 @@ export default {
     background: ColorsEnum.White,
     lightBackground: ColorsEnum.Light_Gray,
     tint: tintColorLight,
-    tabIconDefault: ColorsEnum.Red,
+    tabIconDefault: ColorsEnum.Faded_Gray,
     tabIconSelected: tintColorLight,
   },
   dark: {
@@ -24,7 +25,7 @@ export default {
     background: ColorsEnum.Dark_Background,
     lightBackground: ColorsEnum.Dark_Gray,
     tint: tintColorDark,
-    tabIconDefault: ColorsEnum.Red,
+    tabIconDefault: ColorsEnum.Faded_Gray,
     tabIconSelected: tintColorDark,
   },
 };

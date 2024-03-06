@@ -60,9 +60,7 @@ export const Actions: React.FC = () => {
 
   const handleAddTransaction = useCallback(
     (transactionType: TransactionTypeEnum) => {
-      console.log('TRANSACTION TYPE FROM BTN', transactionType);
       router.push(`/${transactionType}`);
-      // router.push('/(public)/sign-up');
     },
     [router]
   );
