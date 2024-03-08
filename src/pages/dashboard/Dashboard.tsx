@@ -12,6 +12,8 @@ import { getUser } from '@/src/service/api/users-api/queries';
 import { useGetUser } from '@/src/hooks/useGetUser';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from 'expo-router';
+import { GET_USER_TRANSACTIONS } from '@/src/service/api/transactions-api/consts';
+import { getUserTransactions } from '@/src/service/api/transactions-api/queries';
 
 const DashboardPage: React.FC = () => {
   const user = useGetUser();
@@ -19,23 +21,39 @@ const DashboardPage: React.FC = () => {
     data,
     isLoading,
     refetch: refetchUserData,
+    error,
   } = useQuery({
     queryKey: [GET_USER],
     queryFn: () => getUser(user?.id),
-    refetchOnMount: true,
   });
+  const {
+    data: transactions,
+    isLoading: isLoadingTransactions,
+    refetch: refetchTransactions,
+    error: txnErrors,
+  } = useQuery({
+    queryKey: [GET_USER_TRANSACTIONS],
+    queryFn: () => getUserTransactions(user?.id),
+  });
+
+  console.log('DATAAAAAA', data);
+  console.log('ΤΧΝΣ', transactions);
 
   useFocusEffect(() => {
-    refetchUserData();
+    if (!data || !transactions) {
+      refetchUserData();
+      refetchTransactions();
+    }
   });
 
-  if (isLoading || !data) return <ActivityIndicator />;
+  if (isLoading || isLoadingTransactions || !data || !transactions)
+    return <ActivityIndicator />;
 
   return (
     <Page>
       <TopMenu userName={data.userName} />
       <TotalBalance userBalance={data.balance} />
-      <RecentTransactions />
+      <RecentTransactions transactions={transactions.recentTransactions} />
       <TransactionHistory />
     </Page>
   );

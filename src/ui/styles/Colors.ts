@@ -9,6 +9,7 @@ export enum ColorsEnum {
   Black = '#000',
   Red = '#FF0000',
   Faded_Gray = '#ccc',
+  Green = '#00FF00',
 }
 
 export default {
