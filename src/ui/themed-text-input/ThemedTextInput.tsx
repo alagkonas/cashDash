@@ -4,6 +4,7 @@ import { TextInput as DefaultTextInput } from 'react-native';
 
 import { ThemeProps, useThemeColor } from '@/src/hooks/useThemeColor';
 import { styled } from 'styled-components/native';
+import { number } from 'yup';
 
 export type TextProps = ThemeProps &
   DefaultTextInput['props'] & { disabled: boolean };
@@ -14,9 +15,10 @@ const StyledDefaultTextInput = styled(DefaultTextInput)<{
 }>`
   border-radius: 15px;
   width: 100%;
-  height: 50px;
+  height: ${({ numberOfLines }) =>
+    numberOfLines ? `${numberOfLines * 50}px` : '50px'};
   font-size: 18px;
-  padding: 0 12px;
+  padding: 8px 12px;
 
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;

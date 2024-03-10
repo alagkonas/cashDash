@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
 
-import { Stack, Tabs, useRouter } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Colors from '@/src/ui/styles/Colors';
 import { useClientOnlyValue } from '@/src/hooks/useClientOnlyValue';
 import { FontAwesome } from '@expo/vector-icons';
-import { Routes } from '../consts';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -24,6 +23,7 @@ const AuthRoutes: React.FC = () => {
 
   return (
     <Tabs
+      backBehavior='history'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         // Disable the static render of the header on web
@@ -36,7 +36,9 @@ const AuthRoutes: React.FC = () => {
         options={{
           title: 'Dashboard',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='briefcase' color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -44,7 +46,8 @@ const AuthRoutes: React.FC = () => {
         options={{
           title: 'Analytics',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+          tabBarButton: () => null,
+          // tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
         }}
       />
       <Tabs.Screen
@@ -62,6 +65,7 @@ const AuthRoutes: React.FC = () => {
           title: '',
           headerShown: true,
           tabBarButton: () => null,
+          unmountOnBlur: true,
           headerLeft: ({}) => (
             <FontAwesome
               name='angle-left'
@@ -71,7 +75,6 @@ const AuthRoutes: React.FC = () => {
               onPress={handleNavigateBack}
             />
           ),
-          unmountOnBlur: true,
         }}
       />
       <Tabs.Screen
@@ -80,6 +83,7 @@ const AuthRoutes: React.FC = () => {
           title: '',
           headerShown: true,
           tabBarButton: () => null,
+          unmountOnBlur: true,
           headerLeft: ({}) => (
             <FontAwesome
               name='angle-left'
@@ -97,6 +101,25 @@ const AuthRoutes: React.FC = () => {
           title: '',
           headerShown: true,
           tabBarButton: () => null,
+          unmountOnBlur: true,
+          headerLeft: ({}) => (
+            <FontAwesome
+              name='angle-left'
+              size={30}
+              style={{ marginBottom: -3, marginLeft: 12 }}
+              color={Colors[colorScheme ?? 'light'].tabIconDefault}
+              onPress={handleNavigateBack}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='(settings)/account/change-password/index'
+        options={{
+          title: '',
+          headerShown: true,
+          tabBarButton: () => null,
+          unmountOnBlur: true,
           headerLeft: ({}) => (
             <FontAwesome
               name='angle-left'

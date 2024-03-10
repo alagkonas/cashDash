@@ -1,11 +1,6 @@
 import Button from '@/src/ui/button/Button';
 import { Text } from '@/src/ui/text/Text';
 import { View } from '@/src/ui/view/View';
-import { FormFieldsTypes } from './ViewEditTransactionForm.types';
-import { useCallback } from 'react';
-import { useRouter } from 'expo-router';
-import { Routes } from '@/src/routes/consts';
-import { useOnComponentUnmount } from '@/src/hooks/useOnComponentUnmount';
 
 type ActionButtonsProps = {
   handleSubmit: VoidFunction;
@@ -18,8 +13,6 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({
   onCancel,
   loading,
 }) => {
-  const router = useRouter();
-
   return (
     <View
       style={{

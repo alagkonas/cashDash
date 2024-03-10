@@ -53,7 +53,6 @@ const LoginForm: React.FC = () => {
 
   return (
     <View>
-      {/* {isPending && <ActivityIndicator />} */}
       <Formik<FormFieldsTypes>
         initialValues={{
           email: null,

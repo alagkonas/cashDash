@@ -86,24 +86,35 @@ const TransactionForm: React.FC = () => {
       >
         {({ setFieldValue, values, handleReset }) => (
           <View>
-            {formFields.map(({ field, label, valueMapper, placeHolder }) => (
-              <FormInput
-                key={field}
-                field={field}
-                label={label}
-                value={values[field]}
-                placeholder={placeHolder}
-                onChangeText={(value) => {
-                  if (valueMapper) {
-                    return setFieldValue(
-                      field,
-                      valueMapper(value, values[field])
-                    );
-                  }
-                  return setFieldValue(field, value);
-                }}
-              />
-            ))}
+            {formFields.map(
+              ({
+                field,
+                label,
+                valueMapper,
+                placeHolder,
+                multiline,
+                numberOfLines,
+              }) => (
+                <FormInput
+                  key={field}
+                  field={field}
+                  label={label}
+                  value={values[field]}
+                  placeholder={placeHolder}
+                  multiline={multiline}
+                  numberOfLines={numberOfLines ?? 1}
+                  onChangeText={(value) => {
+                    if (valueMapper) {
+                      return setFieldValue(
+                        field,
+                        valueMapper(value, values[field])
+                      );
+                    }
+                    return setFieldValue(field, value);
+                  }}
+                />
+              )
+            )}
             <ActionButtons
               handleReset={handleReset}
               handleSubmit={() => handleSubmit(values)}

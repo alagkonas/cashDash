@@ -48,6 +48,8 @@ export const useGetFormFields = (transactionType?: TransactionTypeEnum) => {
       {
         field: FormFields.Description,
         label: Texts.DescriptionLabel,
+        multiline: true,
+        numberOfLines: 2,
       },
       transactionType === TransactionTypeEnum.Deposit
         ? {

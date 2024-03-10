@@ -4,6 +4,7 @@ export enum Routes {
   SignIn = '/(public)/sign-in',
   TransactionView = '/(auth)/(transactions)/view-edit-transaction',
   Account = '/(auth)/(settings)/account',
+  ChangePassword = '/(auth)/(settings)/account/change-password',
 }
 
 export const routes = {

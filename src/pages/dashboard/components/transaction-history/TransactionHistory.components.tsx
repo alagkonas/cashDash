@@ -1,4 +1,9 @@
-import { FlatList, TouchableOpacity, useColorScheme } from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  useColorScheme,
+} from 'react-native';
 
 import { View } from '@/src/ui/view/View';
 import Card from '@/src/ui/card/Card';
@@ -12,7 +17,7 @@ import { truncate } from 'lodash';
 import { Texts } from './TransactionHistory.texts';
 import styled from 'styled-components/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useRouter } from 'expo-router';
 import { Routes } from '@/src/routes/consts';
 import Spinner from '@/src/ui/spinner/Spinner';
@@ -121,15 +126,41 @@ export const TransactionHistoryList: React.FC<{
   transactions: TransactionDTO[] | undefined;
   isLoading: boolean;
 }> = ({ transactions, isLoading }) => {
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const handleScroll = (event: any) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+
+    console.log(layoutMeasurement.height, contentOffset.y, contentSize.height);
+
+    const paddingToBottom = 100; // Adjust this value as needed
+    if (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    ) {
+      console.log('END REACHED'); // Call onEndReached when end of list is reached
+    }
+  };
+
+  //   isCloseToBottom({layoutMeasurement, contentOffset, contentSize}){
+  //    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+  // }
+
   return (
-    <View>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        transactions?.map((transaction, index) => (
-          <TransactionHistoryItem key={index} transaction={transaction} />
-        ))
-      )}
-    </View>
+    <ScrollView
+      ref={scrollViewRef}
+      onScroll={handleScroll}
+      scrollEventThrottle={16} // Adjust throttle as needed for performance
+    >
+      <View>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          transactions?.map((transaction, index) => (
+            <TransactionHistoryItem key={index} transaction={transaction} />
+          ))
+        )}
+      </View>
+    </ScrollView>
   );
 };

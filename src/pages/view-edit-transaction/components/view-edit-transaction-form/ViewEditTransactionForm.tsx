@@ -109,8 +109,7 @@ const TransactionForm: React.FC<{
 
   const handleCancel = useCallback(() => {
     onChangeMode(TransactionFormMode.View);
-    console.log('MODE CHANGE TRIGGERED');
-  }, []);
+  }, [onChangeMode]);
 
   return (
     <View>
@@ -122,25 +121,36 @@ const TransactionForm: React.FC<{
       >
         {({ setFieldValue, values, handleReset }) => (
           <View>
-            {formFields.map(({ field, label, valueMapper, placeHolder }) => (
-              <FormInput
-                key={field}
-                field={field}
-                label={label}
-                value={values[field]}
-                placeholder={placeHolder}
-                disabled={areFieldsDisabled}
-                onChangeText={(value) => {
-                  if (valueMapper) {
-                    return setFieldValue(
-                      field,
-                      valueMapper(value, values[field])
-                    );
-                  }
-                  return setFieldValue(field, value);
-                }}
-              />
-            ))}
+            {formFields.map(
+              ({
+                field,
+                label,
+                valueMapper,
+                placeHolder,
+                multiline,
+                numberOfLines,
+              }) => (
+                <FormInput
+                  key={field}
+                  field={field}
+                  label={label}
+                  value={values[field]}
+                  placeholder={placeHolder}
+                  disabled={areFieldsDisabled}
+                  multiline={multiline}
+                  numberOfLines={numberOfLines ?? 1}
+                  onChangeText={(value) => {
+                    if (valueMapper) {
+                      return setFieldValue(
+                        field,
+                        valueMapper(value, values[field])
+                      );
+                    }
+                    return setFieldValue(field, value);
+                  }}
+                />
+              )
+            )}
             {mode === TransactionFormMode.Edit && (
               <ActionButtons
                 onCancel={() => {

@@ -1,7 +1,7 @@
 import { db } from '@/db/db';
 import { users } from '@/db/schemas/users';
 
-import { UserDTO } from './types';
+import { UpdateUserParams, UpdateUserPasswordParams, UserDTO } from './types';
 import { eq } from 'drizzle-orm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import bcrypt from 'react-native-bcrypt';
@@ -107,6 +107,71 @@ export const signOutUser = async (userId: number) => {
   }
 
   await AsyncStorage.multiRemove(['sessionToken', 'user']);
+
+  return;
+};
+
+export const updateUser = async ({
+  email,
+  userId,
+  userName,
+}: UpdateUserParams) => {
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  });
+
+  if (!user) {
+    throw new Error("User doesn't exists");
+  }
+
+  const userUpdated = await db
+    .update(users)
+    .set({ userName: userName, email: email })
+    .where(eq(users.id, userId));
+
+  if (!userUpdated) {
+    throw new Error('Something went wrong!');
+  }
+
+  AsyncStorage.setItem(
+    'user',
+    JSON.stringify({
+      userName: userName,
+      email: email,
+      id: userId,
+    })
+  );
+
+  return;
+};
+
+export const updateUserPassword = async ({
+  newPassword,
+  oldPassword,
+  userId,
+}: UpdateUserPasswordParams) => {
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  });
+
+  if (!user) {
+    throw new Error("User doesn't exists");
+  }
+
+  const passwordMatch = bcrypt.compareSync(oldPassword, user.password);
+
+  if (!passwordMatch) {
+    throw new Error('Password is incorrect!');
+  }
+
+  const userUpdated = await db
+    .update(users)
+    .set({ password: newPassword })
+    .where(eq(users.id, userId));
+
+  if (!userUpdated) {
+    throw new Error('Something went wrong!');
+  }
 
   return;
 };

@@ -5,6 +5,7 @@ import { Text } from '@/src/ui/text/Text';
 import { View } from '@/src/ui/view/View';
 import { FontAwesome } from '@expo/vector-icons';
 import {
+  DimensionValue,
   Touchable,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -17,6 +18,8 @@ export type SettingsListItemProps = {
   settingName: string;
   settingNameColor?: ColorsEnum;
   onPress?: VoidFunction;
+  horizontalTextMargin?: number;
+  bottomBorderWidh?: DimensionValue;
 };
 
 const SettingsListItem: React.FC<SettingsListItemProps> = ({
@@ -24,6 +27,8 @@ const SettingsListItem: React.FC<SettingsListItemProps> = ({
   settingName,
   settingNameColor,
   onPress,
+  horizontalTextMargin = 38,
+  bottomBorderWidh,
 }) => {
   const colorScheme = useColorScheme();
 
@@ -68,7 +73,7 @@ const SettingsListItem: React.FC<SettingsListItemProps> = ({
                   color: settingNameColor
                     ? settingNameColor
                     : Colors[colorScheme ?? 'light'].text,
-                  marginHorizontal: iconName ? 0 : 38,
+                  marginHorizontal: iconName ? 0 : horizontalTextMargin,
                 }}
               >
                 {settingName}
@@ -84,7 +89,7 @@ const SettingsListItem: React.FC<SettingsListItemProps> = ({
         </View>
         <View
           style={{
-            width: '90%',
+            width: bottomBorderWidh ? bottomBorderWidh : '90%',
             borderBottomWidth: 0.5,
             borderBottomColor: Colors[colorScheme ?? 'light'].lightBackground,
             alignSelf: 'flex-end',
