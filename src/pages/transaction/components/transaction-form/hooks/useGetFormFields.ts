@@ -5,7 +5,8 @@ import { TransactionTypeEnum } from '@/db/schemas/transactions';
 
 const separator = '/';
 
-export const useGetFormFields = (transactionType: TransactionTypeEnum) => {
+export const useGetFormFields = (transactionType?: TransactionTypeEnum) => {
+  if (!transactionType) return [];
   const handleSetDate = useCallback((text: string, previousText: string) => {
     let newText = text;
 

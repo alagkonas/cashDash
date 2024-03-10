@@ -1,4 +1,11 @@
+import { TransactionTypeEnum } from '@/db/schemas/transactions';
 import { object, string } from 'yup';
+
+export enum TransactionFormMode {
+  New = 'new',
+  Edit = 'edit',
+  View = 'view',
+}
 
 export enum FormFields {
   Amount = 'amount',

@@ -5,6 +5,6 @@ export const useOnComponentUnmount = (fn: VoidFunction) => {
     () => () => {
       fn();
     },
-    [fn]
+    []
   );
 };

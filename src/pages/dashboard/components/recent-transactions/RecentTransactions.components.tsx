@@ -9,6 +9,7 @@ import { TransactionTypeEnum } from '@/db/schemas/transactions';
 import { formatDate } from '@/src/utils/formatDate';
 import { formatAmount } from '@/src/utils/formatAmountWithSuffix';
 import { truncate } from 'lodash';
+import Spinner from '@/src/ui/spinner/Spinner';
 
 const RecentTransactionsItem: React.FC<{
   transaction: TransactionDTO;
@@ -58,17 +59,24 @@ const RecentTransactionsItem: React.FC<{
 };
 
 export const RecentTransactionsList: React.FC<{
-  transactions: TransactionDTO[];
-}> = ({ transactions }) => {
+  transactions: TransactionDTO[] | undefined;
+  isLoading: boolean;
+}> = ({ transactions, isLoading }) => {
   return (
     <View style={{ marginVertical: 8 }}>
-      <FlatList
-        data={transactions}
-        renderItem={({ item }) => <RecentTransactionsItem transaction={item} />}
-        keyExtractor={(item) => String(item.id)}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-      />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <FlatList
+          data={transactions}
+          renderItem={({ item }) => (
+            <RecentTransactionsItem transaction={item} />
+          )}
+          keyExtractor={(item) => String(item.id)}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        />
+      )}
     </View>
   );
 };

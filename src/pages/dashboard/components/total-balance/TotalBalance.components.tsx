@@ -10,10 +10,12 @@ import Button from '@/src/ui/button/Button';
 import { useRouter } from 'expo-router';
 import { useCallback } from 'react';
 import { TransactionTypeEnum } from '@/db/schemas/transactions';
+import Spinner from '@/src/ui/spinner/Spinner';
 
-export const CashBalance: React.FC<{ userBalance: number }> = ({
-  userBalance,
-}) => {
+export const CashBalance: React.FC<{
+  userBalance: number | undefined;
+  isLoading: boolean;
+}> = ({ userBalance, isLoading }) => {
   const colorScheme = useColorScheme();
 
   return (
@@ -26,16 +28,25 @@ export const CashBalance: React.FC<{ userBalance: number }> = ({
           flexDirection: 'row',
           marginTop: 12,
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <FontAwesome
-          size={35}
-          name='euro'
-          color={Colors[colorScheme ?? 'light'].text}
-        />
-        <Text style={{ fontSize: 38, fontWeight: '600', marginLeft: 6 }}>
-          {userBalance}
-        </Text>
+        {isLoading ? (
+          <View>
+            <Spinner />
+          </View>
+        ) : (
+          <>
+            <FontAwesome
+              size={35}
+              name='euro'
+              color={Colors[colorScheme ?? 'light'].text}
+            />
+            <Text style={{ fontSize: 38, fontWeight: '600', marginLeft: 6 }}>
+              {userBalance}
+            </Text>
+          </>
+        )}
       </View>
     </View>
   );

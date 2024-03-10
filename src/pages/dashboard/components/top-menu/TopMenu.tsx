@@ -12,7 +12,7 @@ import { useGetUser } from '@/src/hooks/useGetUser';
 import { useRouter } from 'expo-router';
 import { Routes } from '@/src/routes/consts';
 
-const TopMenu: React.FC<{ userName: string }> = ({ userName }) => {
+const TopMenu: React.FC<{ userName: string | undefined }> = ({ userName }) => {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
@@ -24,7 +24,7 @@ const TopMenu: React.FC<{ userName: string }> = ({ userName }) => {
     <TopMenuContainer>
       <Text style={{ fontSize: 20, fontWeight: '600' }}>
         {Texts.WelcomeText}
-        {userName}
+        {userName ?? ''}
       </Text>
       <Circle>
         <FontAwesome

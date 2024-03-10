@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import Page from '@/src/ui/page/Page';
 
@@ -21,7 +21,6 @@ const DashboardPage: React.FC = () => {
     data,
     isLoading,
     refetch: refetchUserData,
-    error,
   } = useQuery({
     queryKey: [GET_USER],
     queryFn: () => getUser(user?.id),
@@ -30,31 +29,32 @@ const DashboardPage: React.FC = () => {
     data: transactions,
     isLoading: isLoadingTransactions,
     refetch: refetchTransactions,
-    error: txnErrors,
   } = useQuery({
     queryKey: [GET_USER_TRANSACTIONS],
     queryFn: () => getUserTransactions(user?.id),
   });
 
-  console.log('DATAAAAAA', data);
-  console.log('ΤΧΝΣ', transactions);
-
-  useFocusEffect(() => {
-    if (!data || !transactions) {
-      refetchUserData();
-      refetchTransactions();
-    }
-  });
-
-  if (isLoading || isLoadingTransactions || !data || !transactions)
-    return <ActivityIndicator />;
+  useFocusEffect(
+    useCallback(() => {
+      if (user?.id) {
+        refetchUserData();
+        refetchTransactions();
+      }
+    }, [refetchUserData, refetchTransactions, user?.id])
+  );
 
   return (
     <Page>
-      <TopMenu userName={data.userName} />
-      <TotalBalance userBalance={data.balance} />
-      <RecentTransactions transactions={transactions.recentTransactions} />
-      <TransactionHistory />
+      <TopMenu userName={data?.userName} />
+      <TotalBalance isLoading={isLoading} userBalance={data?.balance} />
+      <RecentTransactions
+        isLoading={isLoading || isLoadingTransactions}
+        transactions={transactions?.recentTransactions}
+      />
+      <TransactionHistory
+        isLoading={isLoading || isLoadingTransactions}
+        transactions={transactions?.transactions}
+      />
     </Page>
   );
 };

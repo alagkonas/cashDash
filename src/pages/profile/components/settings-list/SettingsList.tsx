@@ -14,7 +14,7 @@ import { ActivityIndicator } from 'react-native';
 
 const SettingsList: React.FC<{ userId: number }> = ({ userId }) => {
   const router = useRouter();
-  const handleSetingNavigation = useCallback(() => {}, []);
+
   const {
     mutate: signOut,
     isSuccess,
@@ -23,6 +23,10 @@ const SettingsList: React.FC<{ userId: number }> = ({ userId }) => {
     mutationKey: [SIGN_OUT_USER],
     mutationFn: () => signOutUser(userId),
   });
+
+  const handleSettingNavigation = useCallback(() => {
+    router.push(Routes.Account);
+  }, [router]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -34,6 +38,7 @@ const SettingsList: React.FC<{ userId: number }> = ({ userId }) => {
     {
       iconName: 'user',
       settingName: 'Account',
+      onPress: () => handleSettingNavigation(),
     },
     {
       settingName: 'Sign out',

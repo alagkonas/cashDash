@@ -13,11 +13,13 @@ export const getUserTransactions = async (userId: number | undefined) => {
 
   const recentTransactions = sortBy(userTransactions, 'createdAt').slice(0, 5);
 
-  console.log({ transactions: userTransactions, recentTransactions });
-
   return { transactions: userTransactions, recentTransactions };
 };
 
-export const getUsers = async () => {
-  return db.select().from(users);
+export const getTransaction = async (transactionId: number | undefined) => {
+  if (!transactionId) return null;
+
+  return await db.query.transactions.findFirst({
+    where: eq(transactions.id, transactionId),
+  });
 };

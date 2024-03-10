@@ -53,10 +53,46 @@ const AuthRoutes: React.FC = () => {
           title: 'Transaction',
           headerShown: false,
           tabBarButton: () => null,
+          unmountOnBlur: true,
+        }}
+      />
+      <Tabs.Screen
+        name='(transactions)/view-edit-transaction/[id]'
+        options={{
+          title: '',
+          headerShown: true,
+          tabBarButton: () => null,
+          headerLeft: ({}) => (
+            <FontAwesome
+              name='angle-left'
+              size={30}
+              style={{ marginBottom: -3, marginLeft: 12 }}
+              color={Colors[colorScheme ?? 'light'].tabIconDefault}
+              onPress={handleNavigateBack}
+            />
+          ),
+          unmountOnBlur: true,
         }}
       />
       <Tabs.Screen
         name='(settings)/settings'
+        options={{
+          title: '',
+          headerShown: true,
+          tabBarButton: () => null,
+          headerLeft: ({}) => (
+            <FontAwesome
+              name='angle-left'
+              size={30}
+              style={{ marginBottom: -3, marginLeft: 12 }}
+              color={Colors[colorScheme ?? 'light'].tabIconDefault}
+              onPress={handleNavigateBack}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='(settings)/account/index'
         options={{
           title: '',
           headerShown: true,

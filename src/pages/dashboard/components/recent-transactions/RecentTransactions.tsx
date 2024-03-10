@@ -7,15 +7,19 @@ import { Texts } from './RecentTransactions.texts';
 import { RecentTransactionsList } from './RecentTransactions.components';
 import { TransactionDTO } from '@/src/service/api/transactions-api/types';
 
-const RecentTransactions: React.FC<{ transactions: TransactionDTO[] }> = ({
-  transactions,
-}) => {
+const RecentTransactions: React.FC<{
+  transactions: TransactionDTO[] | undefined;
+  isLoading: boolean;
+}> = ({ transactions, isLoading }) => {
   return (
     <View style={{ marginTop: 16 }}>
       <Text style={{ fontSize: 16, fontWeight: '500', paddingHorizontal: 8 }}>
         {Texts.RecentTransactions}
       </Text>
-      <RecentTransactionsList transactions={transactions} />
+      <RecentTransactionsList
+        isLoading={isLoading}
+        transactions={transactions}
+      />
     </View>
   );
 };

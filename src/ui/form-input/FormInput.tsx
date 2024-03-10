@@ -18,7 +18,6 @@ const FormInput: React.FC<FormInputProps> = ({
   label,
   placeholder,
   disabled = false,
-  // value,
   ...restInputProps
 }) => {
   return (
@@ -26,6 +25,7 @@ const FormInput: React.FC<FormInputProps> = ({
       <Text style={{ paddingBottom: 6, fontSize: 16 }}>{label}</Text>
       <ThemedTextInput
         disabled={disabled}
+        editable={!disabled}
         placeholder={placeholder}
         {...restInputProps}
       />
