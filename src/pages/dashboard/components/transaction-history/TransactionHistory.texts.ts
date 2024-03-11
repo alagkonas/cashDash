@@ -4,4 +4,5 @@ export enum Texts {
   Sender = 'Sender: ',
   Recipient = 'Recipient: ',
   DescriptionLabel = 'Description: ',
+  LoadMore = 'Load more...',
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Page from '@/src/ui/page/Page';
 
@@ -10,13 +10,11 @@ import { useQuery } from '@tanstack/react-query';
 import { GET_USER } from '@/src/service/api/users-api/consts';
 import { getUser } from '@/src/service/api/users-api/queries';
 import { useGetUser } from '@/src/hooks/useGetUser';
-import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from 'expo-router';
-import { GET_USER_TRANSACTIONS } from '@/src/service/api/transactions-api/consts';
-import { getUserTransactions } from '@/src/service/api/transactions-api/queries';
 
 const DashboardPage: React.FC = () => {
   const user = useGetUser();
+
   const {
     data,
     isLoading,
@@ -25,36 +23,21 @@ const DashboardPage: React.FC = () => {
     queryKey: [GET_USER],
     queryFn: () => getUser(user?.id),
   });
-  const {
-    data: transactions,
-    isLoading: isLoadingTransactions,
-    refetch: refetchTransactions,
-  } = useQuery({
-    queryKey: [GET_USER_TRANSACTIONS],
-    queryFn: () => getUserTransactions(user?.id),
-  });
 
   useFocusEffect(
     useCallback(() => {
       if (user?.id) {
         refetchUserData();
-        refetchTransactions();
       }
-    }, [refetchUserData, refetchTransactions, user?.id])
+    }, [refetchUserData, user?.id])
   );
 
   return (
     <Page>
       <TopMenu userName={data?.userName} />
       <TotalBalance isLoading={isLoading} userBalance={data?.balance} />
-      <RecentTransactions
-        isLoading={isLoading || isLoadingTransactions}
-        transactions={transactions?.recentTransactions}
-      />
-      <TransactionHistory
-        isLoading={isLoading || isLoadingTransactions}
-        transactions={transactions?.transactions}
-      />
+      <RecentTransactions isLoading={isLoading} />
+      <TransactionHistory isLoading={isLoading} />
     </Page>
   );
 };

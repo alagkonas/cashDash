@@ -45,12 +45,6 @@ export const useGetFormFields = (transactionType?: TransactionTypeEnum) => {
         valueMapper: handleSetDate,
         placeHolder: 'DD/MM/YYYY',
       },
-      {
-        field: FormFields.Description,
-        label: Texts.DescriptionLabel,
-        multiline: true,
-        numberOfLines: 2,
-      },
       transactionType === TransactionTypeEnum.Deposit
         ? {
             field: FormFields.Sender,
@@ -60,6 +54,12 @@ export const useGetFormFields = (transactionType?: TransactionTypeEnum) => {
             field: FormFields.Recipient,
             label: Texts.RecipientLabel,
           },
+      {
+        field: FormFields.Description,
+        label: Texts.DescriptionLabel,
+        multiline: true,
+        numberOfLines: 2,
+      },
     ],
     [transactionType]
   );

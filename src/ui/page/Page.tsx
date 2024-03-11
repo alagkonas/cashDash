@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useCallback } from 'react';
 import { ScrollView } from 'react-native';
 
 import { SafeAreaView } from '../safe-area-view/SafeAreaView';

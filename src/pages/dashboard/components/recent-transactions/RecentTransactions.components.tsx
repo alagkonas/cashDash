@@ -59,7 +59,7 @@ const RecentTransactionsItem: React.FC<{
 };
 
 export const RecentTransactionsList: React.FC<{
-  transactions: TransactionDTO[] | undefined;
+  transactions: TransactionDTO[] | undefined | null;
   isLoading: boolean;
 }> = ({ transactions, isLoading }) => {
   return (

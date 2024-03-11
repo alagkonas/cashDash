@@ -53,10 +53,19 @@ const AuthRoutes: React.FC = () => {
       <Tabs.Screen
         name='(transactions)/[transactionType]'
         options={{
-          title: 'Transaction',
-          headerShown: false,
+          title: '',
+          headerShown: true,
           tabBarButton: () => null,
           unmountOnBlur: true,
+          headerLeft: ({}) => (
+            <FontAwesome
+              name='angle-left'
+              size={30}
+              style={{ marginBottom: -3, marginLeft: 12 }}
+              color={Colors[colorScheme ?? 'light'].tabIconDefault}
+              onPress={handleNavigateBack}
+            />
+          ),
         }}
       />
       <Tabs.Screen

@@ -123,44 +123,18 @@ const TransactionHistoryItem: React.FC<{
 };
 
 export const TransactionHistoryList: React.FC<{
-  transactions: TransactionDTO[] | undefined;
+  transactions: TransactionDTO[];
   isLoading: boolean;
 }> = ({ transactions, isLoading }) => {
-  const scrollViewRef = useRef<ScrollView>(null);
-
-  const handleScroll = (event: any) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-
-    console.log(layoutMeasurement.height, contentOffset.y, contentSize.height);
-
-    const paddingToBottom = 100; // Adjust this value as needed
-    if (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    ) {
-      console.log('END REACHED'); // Call onEndReached when end of list is reached
-    }
-  };
-
-  //   isCloseToBottom({layoutMeasurement, contentOffset, contentSize}){
-  //    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-  // }
-
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      onScroll={handleScroll}
-      scrollEventThrottle={16} // Adjust throttle as needed for performance
-    >
-      <View>
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          transactions?.map((transaction, index) => (
-            <TransactionHistoryItem key={index} transaction={transaction} />
-          ))
-        )}
-      </View>
-    </ScrollView>
+    <View>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        transactions?.map((transaction, index) => (
+          <TransactionHistoryItem key={index} transaction={transaction} />
+        ))
+      )}
+    </View>
   );
 };

@@ -12,6 +12,7 @@ import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Routes from '@/src/routes/Routes';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/src/service/react-query/client';
+import Spinner from '@/src/ui/spinner/Spinner';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,7 +46,7 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return <Spinner />;
   }
 
   return (
